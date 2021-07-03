@@ -1,0 +1,26 @@
+;; Write a program to find words with max length at
+;; even position of the string
+
+(ns user
+  (:require
+   [clojure.string :as str]))
+
+(def sample-string
+  ["You can edit the contents here the"
+   "Use it as a REPL if you like"
+   "traverse up and down the REPL command history"
+   "You can edit the contents here. Use it as a REPL if you like"])
+
+(defn split-and-invoke
+  [phrase]
+  (let [s (str/split phrase #" ")                        ;; split all the words from phrase to a vector
+        even-pos (filterv
+                  #(when (odd? (.indexOf s %))
+                     %)
+                  s)                                     ;; get all the words present at even position
+        countv (map #(count %) even-pos)                 ;; get all the count of words at even place 
+        max-index (.indexOf countv (apply max countv))]  ;; get max index of word with highest string length at even pos
+(get even-pos max-index)))                               ;; get the string back from the max index found
+
+
+(mapv split-and-invoke sample-string)                    ;; To quickly run test cases using sample-string as parameter
