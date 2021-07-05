@@ -1,0 +1,23 @@
+(ns user
+  (:require
+   [clojure.string :as str]))
+
+;; Find the word with even max length
+
+(def sample-string
+  ["You can edit the contents here the"
+   "Use it as a REPL if you like"
+   "traverse up and down the REPL command history"
+   "You can edit the contents here. Use it as a REPL if you like"])
+
+(defn word-with-max-even-size
+  [phrase]
+  (let [s (str/split phrase #" ")
+        a (filterv
+           #(when (even? (count %)) %)
+           s)
+        len  (map #(count %) a)
+        max-index (.indexOf len (apply max len))]
+    (get a max-index)))
+
+(mapv word-with-max-even-size sample-string)
